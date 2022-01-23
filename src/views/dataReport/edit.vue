@@ -2,16 +2,16 @@
   <el-dialog
     title="提示"
     :visible.sync="visible"
-    width="20%"
+    width="500px"
     :before-close="handleClose">
     <el-form status-icon
              ref="formData"
              :model="title.formData"
              label-width="150px"
              label-position="right"
-             style="width:400px;">
+             style="width:400px">
       <el-form-item label="任务类型:" prop="taskType">
-        <el-select v-model="formData.taskType" class="full-width-input" clearable>
+        <el-select v-model="formData.taskType" style="width:250px" clearable>
           <el-option v-for="(item, index) in taskType" :key="index" :label="item"
                      :value="item"></el-option>
         </el-select>
@@ -32,14 +32,14 @@
         <el-input v-model="formData.unitName" type="text" clearable></el-input>
       </el-form-item>
       <el-form-item label="类型:" prop="sort">
-        <el-select v-model="formData.sort" class="full-width-input" clearable
+        <el-select v-model="formData.sort" style="width:250px" clearable
                    :multiple-limit="1">
           <el-option v-for="(item, index) in sortOptions" :key="index" :label="item.sort"
                      :value="item.key"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="科别:" prop="category">
-        <el-select v-model="formData.category" class="full-width-input" clearable
+        <el-select v-model="formData.category" style="width:250px" clearable
                    :multiple-limit="1">
           <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item"
                      :value="item"></el-option>
@@ -49,7 +49,8 @@
         <el-date-picker
           v-model="formData.sickTime"
           type="date"
-          placeholder="选择日期">
+          placeholder="选择日期"
+          style="width:250px">
         </el-date-picker>
       </el-form-item>
       <el-form-item label="伤残情况:" prop="sickCondition">
@@ -57,6 +58,7 @@
       </el-form-item>
       <el-form-item label="收件时间:" prop="receivingTime">
         <el-date-picker
+          style="width:250px"
           v-model="formData.receivingTime"
           type="date"
           placeholder="选择日期">
@@ -110,122 +112,123 @@
 </template>
 
 <script>
-  import {getToken} from "@/utils/auth"
-  import api from '@/api/dataReport'
+import {getToken} from "@/utils/auth"
+import api from '@/api/dataReport'
 
-  export default {
-    name: "edit",
-    props: {
-      categoryOptions: {
-        type: Array,
-        default: []
-      },
-      sortOptions: {
-        type: Array,
-        default: []
-      },
-      taskType: {
-        type: Array,
-        default: []
-      },
-      examineProgress: {
-        type: Array,
-        default: []
-      },
-      visible: {//弹出隐藏
-        type: Boolean,
-        default: false
-      },
-      title: {//标题
-        type: String,
-        default: '',
-      },
-      formData: {//表单数据
-        type: Object,
-        default: {}
-      },
-      remoteClose: Function//用于关闭窗口
+export default {
+  name: "edit",
+  props: {
+    categoryOptions: {
+      type: Array,
+      default: []
     },
-    data() {
-      return {
-        baseUrl: process.env.VUE_APP_BASE_API,
-        fastUrl: process.env.FAST_BASE_URL,
-        url: '/file-info/upload-image',
-        headers: {
-          Authorization: getToken()
-        }
-      }
-    }
-    ,
-    methods: {
-      uploadSuccess(response, file, fileList) {
-        const {data} = response
-        data.type = 1
-        this.formData.fileList.push({name: data.fileName, url: 'http://192.168.110.31/' + data.filePath})
-        this.formData.bizFile.push(data)
-      },
-      copyUploadSuccess(response, file, fileList) {
-        const {data} = response
-        data.type = 2
-        this.formData.copyFileList.push({name: data.fileName, url: 'http://192.168.110.31/' + data.filePath})
-        this.formData.bizFile.push(data)
-      },
-      handleRemove(file, fileList) {
-        var bizFile = this.formData.bizFile;
-        let index = bizFile.findIndex((biz => {
-          if (file.response != null) {
-            return biz.filePath === file.response.data.filePath
-          } else {
-            return 'http://192.168.110.31/' + biz.filePath === file.url
-          }
-        }))
-        bizFile.splice(index, 1);
-        this.formData.bizFile = bizFile;
-      },
-      handlePreview(file) {
-        console.log(file);
-      },
-      handleClose() {
-        //表单清空
-        // this.$refs['formData'].resetFields()
-        //this.visible//错误的，因为它是父组件传递过来的，子组件不能直接改 //因为visible是父组件的属性，所以要让父组件去改变值
-        this.$parent.remoteClose()
-      },
-      submitForm() {
-        if (this.formData.reportId == null) {
-          return api.addDataReport(this.formData).then(response => {
-            //表单清空
-            // this.$refs['formData'].resetFields()
-            // this.visible//错误的，因为它是父组件传递过来的，子组件不能直接改 //因为visible是父组件的属性，所以要让父组件去改变值
-            this.$parent.remoteClose()
-            this.$message({
-              message: '保存成功',
-              type: 'success'
-            });
-
-          }).catch(error => {
-            this.$message.error('保存失败');
-          })
-        } else {
-          return api.updateDataReport(this.formData).then(response => {
-            //表单清空
-            // this.$refs['formData'].resetFields()
-            // this.visible//错误的，因为它是父组件传递过来的，子组件不能直接改 //因为visible是父组件的属性，所以要让父组件去改变值
-            this.$parent.remoteClose()
-            this.$message({
-              message: '保存成功',
-              type: 'success'
-            });
-
-          }).catch(error => {
-            this.$message.error('保存失败');
-          })
-        }
-
-
+    sortOptions: {
+      type: Array,
+      default: []
+    },
+    taskType: {
+      type: Array,
+      default: []
+    },
+    examineProgress: {
+      type: Array,
+      default: []
+    },
+    visible: {//弹出隐藏
+      type: Boolean,
+      default: false
+    },
+    title: {//标题
+      type: String,
+      default: '',
+    },
+    formData: {//表单数据
+      type: Object,
+      default: {}
+    },
+    remoteClose: Function//用于关闭窗口
+  },
+  data() {
+    return {
+      baseUrl: process.env.VUE_APP_BASE_API,
+      fastUrl: process.env.FAST_BASE_URL,
+      url: '/file-info/upload-image',
+      headers: {
+        Authorization: getToken()
       }
     }
   }
+  ,
+  methods: {
+    uploadSuccess(response, file, fileList) {
+      const {data} = response
+      data.type = 1
+      this.formData.fileList.push({name: data.fileName, url: 'http://192.168.110.31/' + data.filePath})
+      this.formData.bizFile.push(data)
+    },
+    copyUploadSuccess(response, file, fileList) {
+      const {data} = response
+      data.type = 2
+      this.formData.copyFileList.push({name: data.fileName, url: 'http://192.168.110.31/' + data.filePath})
+      this.formData.bizFile.push(data)
+    },
+    handleRemove(file, fileList) {
+      var bizFile = this.formData.bizFile;
+      let index = bizFile.findIndex((biz => {
+        if (file.response != null) {
+          return biz.filePath === file.response.data.filePath
+        } else {
+          return 'http://192.168.110.31/' + biz.filePath === file.url
+        }
+      }))
+      bizFile.splice(index, 1);
+      this.formData.bizFile = bizFile;
+    },
+    handlePreview(file) {
+      console.log(file);
+    },
+    handleClose() {
+      //表单清空
+      // this.$refs['formData'].resetFields()
+      //this.visible//错误的，因为它是父组件传递过来的，子组件不能直接改 //因为visible是父组件的属性，所以要让父组件去改变值
+      this.$parent.remoteClose()
+    },
+    submitForm() {
+      debugger
+      if (this.formData.reportId == null) {
+        return api.addDataReport(this.formData).then(response => {
+          //表单清空
+          // this.$refs['formData'].resetFields()
+          // this.visible//错误的，因为它是父组件传递过来的，子组件不能直接改 //因为visible是父组件的属性，所以要让父组件去改变值
+          this.$parent.remoteClose()
+          this.$message({
+            message: '保存成功',
+            type: 'success'
+          });
+
+        }).catch(error => {
+          this.$message.error('保存失败');
+        })
+      } else {
+        return api.updateDataReport(this.formData).then(response => {
+          //表单清空
+          // this.$refs['formData'].resetFields()
+          // this.visible//错误的，因为它是父组件传递过来的，子组件不能直接改 //因为visible是父组件的属性，所以要让父组件去改变值
+          this.$parent.remoteClose()
+          this.$message({
+            message: '保存成功',
+            type: 'success'
+          });
+
+        }).catch(error => {
+          this.$message.error('保存失败');
+        })
+      }
+
+
+    }
+  }
+}
 </script>
 
 <style scoped>

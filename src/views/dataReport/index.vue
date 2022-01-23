@@ -3,7 +3,7 @@
     <el-form :model="formData" ref="vForm" :rules="rules" label-position="left" label-width="80px" size="medium"
              @submit.prevent>
       <div class="card-container">
-        <el-card style="{width: 100% !important}" shadow="never">
+        <el-card style="{width: 1560px !important}" shadow="never">
           <div slot="header" class="clear-fix">
             <span>收起</span>
             <i class="float-right el-icon-arrow-down"></i>
@@ -11,61 +11,60 @@
           <el-row>
             <el-col :span="24" class="grid-cell">
               <el-row>
-                <el-col :span="4" class="grid-cell">
+                <el-col :span="5" class="grid-cell">
                   <el-form-item label="认定对象名称:" label-width="110px" prop="identifiedName"
                                 class="label-center-align">
-                    <el-input v-model="formData.identifiedName" type="text" clearable></el-input>
+                    <el-input v-model="formData.identifiedName" style="width: 150px" type="text" clearable></el-input>
                   </el-form-item>
                 </el-col>
-                <el-col :span="4" class="grid-cell" :offset="1">
+                <el-col :span="5" class="grid-cell" :offset="1">
                   <el-form-item label="科别:" label-width="45px" prop="category">
-                    <el-select v-model="formData.category" class="full-width-input" clearable
+                    <el-select v-model="formData.category" style="width: 150px" clearable
                                :multiple-limit="1">
                       <el-option v-for="(item, index) in categoryOptions" :key="index" :label="item"
                                  :value="item"></el-option>
                     </el-select>
                   </el-form-item>
                 </el-col>
-                <el-col :span="4" class="grid-cell">
+                <el-col :span="5" class="grid-cell">
                   <el-form-item label="类型:" label-width="45px" prop="select70598">
-                    <el-select v-model="formData.sort" class="full-width-input" clearable
+                    <el-select v-model="formData.sort" style="width: 150px" clearable
                                :multiple-limit="1">
                       <el-option v-for="(item, index) in sortOptions" :key="index" :label="item.sort"
                                  :value="item.key"></el-option>
                     </el-select>
                   </el-form-item>
                 </el-col>
-                <el-col :span="4" class="grid-cell">
+                <el-col :span="5" class="grid-cell">
                   <el-form-item label="单位名称:" label-width="75px" prop="unitName">
-                    <el-input v-model="formData.unitName" type="text" clearable></el-input>
+                    <el-input v-model="formData.unitName" style="width: 150px" type="text" clearable></el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
               <el-row>
-                <el-col :span="8" class="grid-cell">
-                  <el-col :span="4" class="grid-cell">
-                    <el-form-item label="伤残病时间：" label-width="100px" prop="sickTime" class="label-center-align">
-                      <el-date-picker
-                        v-model="formData.sickTime"
-                        type="daterange"
-                        range-separator="至"
-                        start-placeholder="开始日期"
-                        end-placeholder="结束日期">
-                      </el-date-picker>
-                    </el-form-item>
-                  </el-col>
+                <el-col :span="10" class="grid-cell">
+                  <el-form-item label="伤残病时间：" style="width: 300px" label-width="100px" prop="sickTime"
+                                class="label-center-align">
+                    <el-date-picker
+                      v-model="formData.sickTime"
+                      type="daterange"
+                      range-separator="至"
+                      start-placeholder="开始日期"
+                      end-placeholder="结束日期">
+                    </el-date-picker>
+                  </el-form-item>
                 </el-col>
-                <el-col :span="4" :push="1" label-width="75px" class="grid-cell">
+                <el-col :span="5" :offset="1" label-width="75px" class="grid-cell">
                   <el-form-item label="审核进度:" prop="examineProgress">
-                    <el-select v-model="formData.examineProgress" class="full-width-input" clearable>
+                    <el-select v-model="formData.examineProgress" style="width: 115px" clearable>
                       <el-option v-for="(item, index) in examineProgress" :key="index" :label="item.label"
                                  :value="item.value" :disabled="item.disabled"></el-option>
                     </el-select>
                   </el-form-item>
                 </el-col>
-                <el-col :span="4" :push="2" class="grid-cell">
+                <el-col :span="5" class="grid-cell">
                   <el-form-item label="委托任务:" label-width="75px" prop="taskType">
-                    <el-select v-model="formData.taskType" class="full-width-input" clearable>
+                    <el-select v-model="formData.taskType" style="width: 150px" clearable>
                       <el-option v-for="(item, index) in taskType" :key="index" :label="item"
                                  :value="item"></el-option>
                     </el-select>
@@ -73,7 +72,7 @@
                 </el-col>
               </el-row>
               <el-row>
-                <el-col :span="6" class="grid-cell">
+                <el-col :span="10" class="grid-cell">
                   <el-form-item label="收件时间：" label-width="100px" prop="receivingTime">
                     <el-date-picker
                       v-model="formData.receivingTime"
@@ -84,7 +83,7 @@
                     </el-date-picker>
                   </el-form-item>
                 </el-col>
-                <el-col :span="10" :push="1" class="grid-cell">
+                <el-col :span="14" :push="1" class="grid-cell">
                   <el-row>
                     <el-col :span="3" class="grid-cell">
                       <div class="static-content-item">
@@ -132,7 +131,6 @@
             :data="list"
             border
             @selection-change="handleSelectionChange">
-          >
             <el-table-column
               fixed="left"
               label="操作"
@@ -219,243 +217,255 @@
 </template>
 
 <script>
-  import api from '@/api/dataReport'
-  import Edit from './edit'
+import api from '@/api/dataReport'
+import Edit from './edit'
 
-  export default {
-    name: "dataReport",
-    components: {Edit},
-    props: {},
-    data() {
-      return {
-        edit: {
-          title: '',
-          visible: '',
-          formData: {
-            fileList: [],//认定工伤决定书
-            copyFileList: [],//病例复印件
-          }
-        },
-        list: [],
+export default {
+  name: "dataReport",
+  components: {Edit},
+  props: {},
+  data() {
+    return {
+      edit: {
+        title: '',
+        visible: false,
         formData: {
-          examineProgress: [],
-          imageUrl: null,//不然上传新图片不可立刻预览 }
-          address: '',
-          bizFile: [],
-          category: '',
-          idCart: '',
-          identifiedName: '',
-          identifiedNumber: '',
-          nativePlace: '',
-          phoneNumber: '',
-          receivingTime: '',
-          reportId: '',
-          sex: '',
-          sickCondition: '',
-          sickTime: '',
-          sort: 0,
-          taskType: '',
-          unitName: ''
-        },
-        rules: {},
-        startTime: '',
-        examineProgress: [
-          {
-            "label": "初始",
-            "value": 0
-          }, {
-            "label": "上报",
-            "value": 1
-          }, {
-            "label": "初审",
-            "value": 2
-          }, {
-            "label": "鉴定",
-            "value": 3
-          }, {
-            "label": "一核",
-            "value": 4
-          }, {
-            "label": "二核",
-            "value": 5
-          }, {
-            "label": "审签",
-            "value": 6
-          }],
-        taskType: ['委托任务', '下发任务'],
-        categoryOptions: ['烧伤科', '骨科', '精神科'],
-        sortOptions: [{
-          key: 0,
-          sort: '工'
+          fileList: [],//认定工伤决定书
+          copyFileList: [],//病例复印件
+          bizFile: [{
+            fileName: '/测试',
+            filePath: '/测试',
+            type: '2'
+          }]
+        }
+      },
+      list: [],
+      formData: {
+        examineProgress: [],
+        imageUrl: null,//不然上传新图片不可立刻预览 }
+        address: '',
+        bizFile: [],
+        category: '',
+        idCart: '',
+        identifiedName: '',
+        identifiedNumber: '',
+        nativePlace: '',
+        phoneNumber: '',
+        receivingTime: '',
+        reportId: '',
+        sex: '',
+        sickCondition: '',
+        sickTime: '',
+        sort: 0,
+        taskType: '',
+        unitName: ''
+      },
+      rules: {},
+      startTime: '',
+      examineProgress: [
+        {
+          "label": "初始",
+          "value": 0
         }, {
-          key: 1,
-          sort: '病'
+          "label": "上报",
+          "value": 1
+        }, {
+          "label": "初审",
+          "value": 2
+        }, {
+          "label": "鉴定",
+          "value": 3
+        }, {
+          "label": "一核",
+          "value": 4
+        }, {
+          "label": "二核",
+          "value": 5
+        }, {
+          "label": "审签",
+          "value": 6
         }],
-        multipleSelection: []
-      }
-    },
-    created() {
-      this.getList();
-    },
-    methods: {
-      //重新上报
-      reportClick(reportId) {
-        return api.getDataReportDetail(reportId).then(response => {
-          this.edit.visible = true
-          this.edit.title = '重新上报'
-          const data = response.data;
-          this.edit.formData = data
-
-          var list = new Array();
-          var copyList = new Array();
-          for (let i = 0; i < data.bizFile.length; i++) {
-            const fileInfo = data.bizFile[i];
-            if (fileInfo.type === "1") {
-              list.push({name: fileInfo.fileName, url: 'http://192.168.110.31/' + fileInfo.filePath})
-            }
-            if (fileInfo.type === "2") {
-              copyList.push({name: fileInfo.fileName, url: 'http://192.168.110.31/' + fileInfo.filePath})
-            }
-          }
-          this.edit.formData.copyFileList = copyList;
-          this.edit.formData.fileList = list;
-          console.log(JSON.stringify(this.edit.formData))
-        })
-      },
-      //触发关闭弹出的新增修改子组件窗口
-      remoteClose() {
-        //一定要加上这个，不然有时候表单输入不了值
-        this.edit.formData = {}
-        this.edit.visible = false
-        this.getList();
-      },
-      openAdd() {
+      taskType: ['委托任务', '下发任务'],
+      categoryOptions: ['烧伤科', '骨科', '精神科'],
+      sortOptions: [{
+        key: 0,
+        sort: '工'
+      }, {
+        key: 1,
+        sort: '病'
+      }],
+      multipleSelection: []
+    }
+  },
+  created() {
+    this.getList();
+  }
+  ,
+  methods: {
+    //重新上报
+    reportClick(reportId) {
+      return api.getDataReportDetail(reportId).then(response => {
         this.edit.visible = true
-        this.edit.title = '新增'
-      },
-      getList() {
-        return api.getList(null, 1, 10).then(response => {
-          this.list = response.data.records;
-        })
-      },
-      detailClick(reportId) {
-        return api.getDataReportDetail(reportId).then(response => {
-          this.edit.visible = true
-          this.edit.title = '重新上报'
-          this.edit.formData = response.data
-        })
-      },
-      deleteClick(reportId) {
-        return api.getList(null, 1, 10).then(response => {
-          this.list = response.data.records;
-        })
-      },
-      handleSelectionChange(val){
-        this.multipleSelection = val;
-      }
+        this.edit.title = '重新上报'
+        const data = response.data;
+        this.edit.formData = data
+
+        var list = new Array();
+        var copyList = new Array();
+        for (let i = 0; i < data.bizFile.length; i++) {
+          const fileInfo = data.bizFile[i];
+          if (fileInfo.type === "1") {
+            list.push({name: fileInfo.fileName, url: 'http://192.168.110.31/' + fileInfo.filePath})
+          }
+          if (fileInfo.type === "2") {
+            copyList.push({name: fileInfo.fileName, url: 'http://192.168.110.31/' + fileInfo.filePath})
+          }
+        }
+        this.edit.formData.copyFileList = copyList;
+        this.edit.formData.fileList = list;
+        console.log(JSON.stringify(this.edit.formData))
+      })
+    }
+    ,
+    //触发关闭弹出的新增修改子组件窗口
+    remoteClose() {
+      //一定要加上这个，不然有时候表单输入不了值
+      this.edit.formData = {}
+      this.edit.visible = false
+      this.getList();
+    }
+    ,
+    openAdd() {
+      this.edit.visible = true
+      this.edit.title = '新增'
+    }
+    ,
+    getList() {
+      return api.getList(null, 1, 10).then(response => {
+        this.list = response.data.records;
+      })
+    }
+    ,
+    detailClick(reportId) {
+      return api.getDataReportDetail(reportId).then(response => {
+        this.edit.visible = true
+        this.edit.title = '重新上报'
+        this.edit.formData = response.data
+      })
+    }
+    ,
+    deleteClick(reportId) {
+      return api.getList(null, 1, 10).then(response => {
+        this.list = response.data.records;
+      })
+    }
+    ,
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
     }
   }
+}
 </script>
 <style lang="scss" scoped>
-  .search {
-    .el-input {
-      width: 120px;
-    }
+.search {
+  .el-input {
+    width: 120px;
   }
+}
 </style>
 <style lang="scss">
-  .el-input-number.full-width-input,
-  .el-cascader.full-width-input {
-    width: 100% !important;
+.el-input-number.full-width-input,
+.el-cascader.full-width-input {
+  width: 100% !important;
+}
+
+.el-form-item--medium {
+  .el-radio {
+    line-height: 36px !important;
   }
 
-  .el-form-item--medium {
-    .el-radio {
-      line-height: 36px !important;
-    }
+  .el-rate {
+    margin-top: 8px;
+  }
+}
 
-    .el-rate {
-      margin-top: 8px;
-    }
+.el-form-item--small {
+  .el-radio {
+    line-height: 32px !important;
   }
 
-  .el-form-item--small {
-    .el-radio {
-      line-height: 32px !important;
-    }
+  .el-rate {
+    margin-top: 6px;
+  }
+}
 
-    .el-rate {
-      margin-top: 6px;
-    }
+.el-form-item--mini {
+  .el-radio {
+    line-height: 28px !important;
   }
 
-  .el-form-item--mini {
-    .el-radio {
-      line-height: 28px !important;
-    }
-
-    .el-rate {
-      margin-top: 4px;
-    }
+  .el-rate {
+    margin-top: 4px;
   }
+}
 
-  .clear-fix:before,
-  .clear-fix:after {
-    display: table;
-    content: "";
-  }
+.clear-fix:before,
+.clear-fix:after {
+  display: table;
+  content: "";
+}
 
-  .clear-fix:after {
-    clear: both;
-  }
+.clear-fix:after {
+  clear: both;
+}
 
-  .float-right {
-    float: right;
-  }
+.float-right {
+  float: right;
+}
 
 </style>
 
 <style lang="scss" scoped>
-  div.table-container {
-    table.table-layout {
-      width: 100%;
-      table-layout: fixed;
-      border-collapse: collapse;
+div.table-container {
+  table.table-layout {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
 
-      td.table-cell {
-        display: table-cell;
-        height: 36px;
-        border: 1px solid #e1e2e3;
-      }
+    td.table-cell {
+      display: table-cell;
+      height: 36px;
+      border: 1px solid #e1e2e3;
     }
   }
+}
 
-  div.tab-container {
+div.tab-container {
+}
+
+.label-left-align :deep(.el-form-item__label) {
+  text-align: left;
+}
+
+.label-center-align :deep(.el-form-item__label) {
+  text-align: center;
+}
+
+.label-right-align :deep(.el-form-item__label) {
+  text-align: right;
+}
+
+.custom-label {
+}
+
+.static-content-item {
+  min-height: 20px;
+  display: flex;
+  align-items: center;
+
+  :deep(.el-divider--horizontal) {
+    margin: 0;
   }
-
-  .label-left-align :deep(.el-form-item__label) {
-    text-align: left;
-  }
-
-  .label-center-align :deep(.el-form-item__label) {
-    text-align: center;
-  }
-
-  .label-right-align :deep(.el-form-item__label) {
-    text-align: right;
-  }
-
-  .custom-label {
-  }
-
-  .static-content-item {
-    min-height: 20px;
-    display: flex;
-    align-items: center;
-
-    :deep(.el-divider--horizontal) {
-      margin: 0;
-    }
-  }
+}
 
 </style>
