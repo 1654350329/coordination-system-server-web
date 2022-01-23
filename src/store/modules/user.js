@@ -2,6 +2,7 @@ import {login, logout, getInfo} from '@/api/user'
 import {getToken, setToken, removeToken} from '@/utils/auth'
 import {resetRouter} from '@/router'
 import { Base64 } from "js-base64";
+import de from "element-ui/src/locale/lang/de";
 
 const getDefaultState = () => {
   return {
@@ -37,9 +38,10 @@ const actions = {
         username: Base64.encode(username.trim()),
         password: Base64.encode(password),
       }).then(response => {
+        debugger
         const {data} = response
-        commit('Authorization', data.token)
-        setToken(data.token)
+        commit('Authorization', data.Authorization)
+        setToken(data.Authorization)
         resolve()
       }).catch(error => {
         reject(error)
